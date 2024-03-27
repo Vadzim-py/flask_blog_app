@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'notifications.html' %}
+
+<div class="py-5 align-items-center" style="	text-shadow: 0px 0px 0px black;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="d-flex justify-content-center">All posts<span class="badge badge-light"></span></h3>
+			</div>
+		</div>
+	</div>
+</div>
+{% for post in posts %}
+<div class="py-4" style="text-shadow: 0px 0px 0px black;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 shadow-lg border">
+				<h1 class="text-center">{{ post.title }}</h1>
+				<p class="mb-3 lead text-justify">{{ post.content }}</p>
+				<p class="text-muted">Posted by {{ post.author.username }} on {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</p>
+			</div>
+			<div class="col-md-6">
+    <img class="d-block shadow-lg border img-fluid float-left"
+         src="{% if post.image_file == 'default.jpg' %}
+                {{ url_for('static', filename='img/default.jpg') }}
+              {% else %}
+                {{ url_for('static', filename='img/' + post.image_file) }}
+              {% endif %}"
+         width="800"
+         style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)); background-position: top left; background-size: 100%; background-repeat: repeat; box-shadow: 0px 0px 4px black;"
+         height="600">
+		</div>
+	</div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

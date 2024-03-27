@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flask_app</title>
+    <style>
+        .flashes {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .flashes li {
+            position: relative;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: #fff;
+        }
+        .flashes li.info {
+            background-color: #5bc0de;
+        }
+        .flashes li.success {
+            background-color: #5cb85c;
+        }
+        .flashes li.warning {
+            background-color: #f0ad4e;
+        }
+        .flashes li.error {
+            background-color: #d9534f;
+        }
+        .close {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function closeNotification(event) {
+            event.target.parentElement.style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }} text-center">
+                        {{ message }}
+                        <span class="close" onclick="closeNotification(event)">&times;</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
